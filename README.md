@@ -1,4 +1,3 @@
-```markdown
 # 🎥 SnapTeller
 
 > **Turn videos into stories, insights, and summaries.**
@@ -423,4 +422,3 @@ It helps support the project and encourages further development.
 **Built with Python · OpenCV · FastAPI · Gemini AI**
 
 </div>
-```

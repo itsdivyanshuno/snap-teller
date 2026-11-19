@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VisionAI — Video Analyzer</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    color-scheme: dark;
+    --bg: #090b10;
+    --panel: #11141d;
+    --border: #262b39;
+    --text: #f3f5fb;
+    --muted: #969db0;
+    --accent: #8b7bff;
+}
+
+body {
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+header {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.brand {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.6px;
+}
+
+.brand span {
+    color: var(--accent);
+}
+
+.pill {
+    font-size: 12px;
+    color: #b9b0ff;
+    border: 1px solid #40386c;
+    border-radius: 30px;
+    padding: 5px 12px;
+}
+
+main {
+    max-width: 950px;
+    margin: 65px auto;
+    padding: 0 22px;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.eyebrow {
+    color: #b1a7ff;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: clamp(34px, 6vw, 56px);
+    line-height: 1.15;
+    letter-spacing: -2px;
+    margin: 15px 0;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #a89cff, #76d8ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    color: var(--muted);
+    max-width: 540px;
+    margin: auto;
+    font-size: 15px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 22px;
+}
+
+.card h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.sub {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 22px;
+}
+
+.dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 205px;
+    border: 1.5px dashed #45415f;
+    border-radius: 15px;
+    background: #151523;
+    cursor: pointer;
+    padding: 24px;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.dropzone:hover,
+.dropzone.dragover {
+    border-color: var(--accent);
+    background: #1b1930;
+}
+
+.upload-icon {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.dropzone strong {
+    font-size: 16px;
+}
+
+.dropzone small {
+    color: var(--muted);
+    margin-top: 7px;
+}
+
+#videoInput {
+    display: none;
+}
+
+#videoPreview {
+    display: block;
+    width: 100%;
+    max-height: 380px;
+    background: #050507;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+#videoPreview[hidden] {
+    display: none;
+}
+
+.file-info {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 15px;
+    overflow-wrap: anywhere;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 11px;
+    background: linear-gradient(100deg, #8270ff, #6555db);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover:not(:disabled) {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+#status {
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+    margin-top: 16px;
+    overflow-wrap: anywhere;
+}
+
+#resultCard[hidden] {
+    display: none;
+}
+
+.result-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.result-heading h2 {
+    margin: 0;
+}
+
+.result-tag {
+    color: #9fe6c3;
+    background: #163127;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+}
+
+#summary {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    color: #dce0ed;
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+#frameCount {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border);
+}
+
+#errorDetails {
+    color: #ff9d9d;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+footer {
+    color: #737a8c;
+    text-align: center;
+    padding: 25px;
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 17px 20px;
+    }
+
+    main {
+        margin: 40px auto;
+        padding: 0 15px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    h1 {
+        letter-spacing: -1px;
+    }
+}
+</style>
+</head>
+
+<body>
+<header>
+    <div class="brand">Vision<span>AI</span></div>
+    <div class="pill">● AI Video Intelligence</div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="eyebrow">Video understanding, simplified</div>
+        <h1>Give your videos<br><span class="gradient">a new perspective.</span></h1>
+        <p>Upload a video and let AI analyze its key moments, understand visible events, and generate a chronological summary.</p>
+    </section>
+
+    <section class="card">
+        <h2>Analyze a video</h2>
+        <p class="sub">Select a video file to get started.</p>
+
+        <label class="dropzone" id="dropzone" for="videoInput">
+            <span class="upload-icon">↥</span>
+            <strong>Click to upload or drop your video here</strong>
+            <small>MP4, MOV, AVI, MKV or WEBM</small>
+        </label>
+
+        <input type="file" id="videoInput" accept="video/*">
+
+        <video id="videoPreview" controls hidden></video>
+
+        <div class="file-info" id="fileInfo">No video selected</div>
+
+        <button id="analyzeBtn" disabled>✦ Analyze with AI</button>
+        <p id="status" role="status" aria-live="polite">Your video will be processed by the Python backend.</p>
+    </section>
+
+    <section class="card" id="resultCard" hidden>
+        <div class="result-heading">
+            <h2>Analysis results</h2>
+            <span class="result-tag">✓ Analysis complete</span>
+        </div>
+
+        <p id="summary"></p>
+        <p id="frameCount"></p>
+        <button id="resetBtn">Analyze another video</button>
+    </section>
+</main>
+
+<footer>VisionAI · Built with Python, OpenCV, FastAPI & Gemini</footer>
+
+<script>
+const API_URL = "http://localhost:8000/analyze";
+
+const input = document.getElementById("videoInput");
+const dropzone = document.getElementById("dropzone");
+const preview = document.getElementById("videoPreview");
+const fileInfo = document.getElementById("fileInfo");
+const analyzeBtn = document.getElementById("analyzeBtn");
+const statusText = document.getElementById("status");
+const resultCard = document.getElementById("resultCard");
+const summary = document.getElementById("summary");
+const frameCount = document.getElementById("frameCount");
+const resetBtn = document.getElementById("resetBtn");
+
+const allowedExtensions = [
+    "mp4", "mov", "avi", "mkv", "webm"
+];
+
+let selectedFile = null;
+let previewUrl = null;
+
+function selectFile(file) {
+    if (!file) return;
+
+    const extension = file.name.split(".").pop().toLowerCase();
+
+    if (!allowedExtensions.includes(extension)) {
+        statusText.textContent = "Unsupported file format. Choose MP4, MOV, AVI, MKV or WEBM.";
+        return;
+    }
+
+    selectedFile = file;
+
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    previewUrl = URL.createObjectURL(file);
+
+    preview.src = previewUrl;
+    preview.hidden = false;
+
+    fileInfo.textContent = `${file.name} · ${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+
+    analyzeBtn.disabled = false;
+    statusText.textContent = "Ready to analyze. This may take 30 seconds or longer.";
+    resultCard.hidden = true;
+}
+
+input.addEventListener("change", () => {
+    selectFile(input.files[0]);
+});
+
+["dragenter", "dragover"].forEach(eventName => {
+    dropzone.addEventListener(eventName, event => {
+        event.preventDefault();
+        dropzone.classList.add("dragover");
+    });
+});
+
+["dragleave", "drop"].forEach(eventName => {
+    dropzone.addEventListener(eventName, event => {
+        event.preventDefault();
+        dropzone.classList.remove("dragover");
+    });
+});
+
+dropzone.addEventListener("drop", event => {
+    selectFile(event.dataTransfer.files[0]);
+});
+
+analyzeBtn.addEventListener("click", async () => {
+    if (!selectedFile) return;
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    analyzeBtn.disabled = true;
+    analyzeBtn.textContent = "Analyzing video...";
+    statusText.textContent = "Uploading video and extracting frames. Please wait...";
+    resultCard.hidden = true;
+
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Video analysis failed.");
+        }
+
+        summary.textContent = data.summary || "No summary was returned.";
+        frameCount.textContent = `Frames analyzed: ${data.frames_analyzed ?? "Unknown"} · File: ${data.filename || selectedFile.name}`;
+
+        resultCard.hidden = false;
+        statusText.textContent = "Analysis completed successfully.";
+
+        resultCard.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    } catch (error) {
+        statusText.textContent = "Could not analyze the video.";
+        const details = document.createElement("p");
+        details.id = "errorDetails";
+        details.textContent = error.message.includes("Failed to fetch")
+            ? "Could not connect to the backend. Make sure FastAPI is running at http://localhost:8000."
+            : error.message;
+
+        const oldDetails = document.getElementById("errorDetails");
+        if (oldDetails) oldDetails.remove();
+        statusText.after(details);
+    } finally {
+        analyzeBtn.disabled = !selectedFile;
+        analyzeBtn.textContent = "✦ Analyze with AI";
+    }
+});
+
+resetBtn.addEventListener("click", () => {
+    input.value = "";
+    selectedFile = null;
+    preview.pause();
+    preview.removeAttribute("src");
+    preview.load();
+    preview.hidden = true;
+
+    if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+        previewUrl = null;
+    }
+
+    fileInfo.textContent = "No video selected";
+    summary.textContent = "";
+    frameCount.textContent = "";
+    resultCard.hidden = true;
+    statusText.textContent = "Choose another video to get started.";
+    analyzeBtn.disabled = true;
+
+    const details = document.getElementById("errorDetails");
+    if (details) details.remove();
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+</body>
+</html>

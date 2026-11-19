@@ -1,42 +1,149 @@
+Yep — **copy the entire block below and paste it directly into `README.md`**. It is kept as **one single block**, with no nested triple-backtick fences that can break the formatting.
+
+```markdown
 # 🎥 SnapTeller
 
-> Turn videos into stories, insights, and summaries.
+> **Turn videos into stories, insights, and summaries.**
 
-SnapTeller is an AI-powered video analyzer that extracts important frames from a video and uses Google's Gemini AI to understand and describe the content.
+**SnapTeller** is an AI-powered video analyzer that transforms raw video into meaningful insights using **Computer Vision + Google Gemini AI**.
 
-Instead of watching the entire video manually, SnapTeller gives you a quick AI-generated understanding of what's happening in the video.
+Instead of manually watching an entire video, SnapTeller extracts important frames, analyzes the visual content, and generates an AI-powered understanding of what's happening in the video.
+
+---
 
 ## ✨ Features
 
 - 🎬 Upload and analyze videos
-- 🖼️ Extract important frames from videos
-- 🤖 AI-powered video understanding using Google Gemini
+- 🖼️ Automatic video frame extraction
+- 🤖 AI-powered visual understanding using Google Gemini
 - 📝 Generate video descriptions and summaries
-- ⚡ Fast frame processing
-- 🌐 Simple web-based frontend
+- ⚡ Fast video processing
+- 🌐 Simple and lightweight web interface
 - 🚀 FastAPI backend
+- 👁️ OpenCV-powered computer vision
+- 🔐 Environment-based API key configuration
 - 📁 Local video processing
+
+---
+
+## 🧠 How SnapTeller Works
+
+```mermaid
+flowchart TD
+    A["🎥 Upload Video"] --> B["📤 FastAPI Backend"]
+    B --> C["🎞️ Video Processor"]
+    C --> D["🖼️ Extract Important Frames"]
+    D --> E["🤖 Google Gemini AI"]
+    E --> F["🧠 Understand Visual Content"]
+    F --> G["📝 Generate Analysis"]
+    G --> H["✨ SnapTeller Result"]
+
+    A:::user
+    B:::backend
+    C:::process
+    D:::process
+    E:::ai
+    F:::ai
+    G:::result
+    H:::result
+
+    classDef user fill:#1e293b,color:#fff,stroke:#64748b
+    classDef backend fill:#2563eb,color:#fff,stroke:#60a5fa
+    classDef process fill:#475569,color:#fff,stroke:#94a3b8
+    classDef ai fill:#7c3aed,color:#fff,stroke:#a78bfa
+    classDef result fill:#059669,color:#fff,stroke:#34d399
+```
+
+### 🔄 Processing Pipeline
+
+**1. Upload**  
+The user uploads a video through the SnapTeller frontend.
+
+**2. Backend Processing**  
+FastAPI receives the uploaded video and starts the processing pipeline.
+
+**3. Frame Extraction**  
+OpenCV processes the video and extracts selected frames.
+
+**4. AI Analysis**  
+The extracted frames are sent to Google Gemini for visual analysis.
+
+**5. Understanding**  
+Gemini interprets the visual content and identifies important information.
+
+**6. Result Generation**  
+SnapTeller generates an understandable AI-powered analysis.
+
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+flowchart LR
+    U["👤 User"] --> FE["🌐 Frontend<br/>HTML + CSS + JavaScript"]
+    FE --> API["⚡ FastAPI"]
+    API --> VP["🎞️ Video Processor"]
+    VP --> CV["👁️ OpenCV"]
+    CV --> FR["🖼️ Extracted Frames"]
+    FR --> AI["🤖 Gemini AI"]
+    AI --> API
+    API --> FE
+    FE --> R["📊 Analysis Result"]
+
+    style U fill:#1e293b,color:#fff
+    style FE fill:#2563eb,color:#fff
+    style API fill:#0891b2,color:#fff
+    style VP fill:#475569,color:#fff
+    style CV fill:#475569,color:#fff
+    style FR fill:#64748b,color:#fff
+    style AI fill:#7c3aed,color:#fff
+    style R fill:#059669,color:#fff
+```
+
+---
+
+## 🔍 Architecture Breakdown
+
+| Component | Responsibility |
+|---|---|
+| 🌐 Frontend | Video upload and result display |
+| ⚡ FastAPI | API and request handling |
+| 🎞️ Video Processor | Video processing and frame extraction |
+| 👁️ OpenCV | Computer vision and frame processing |
+| 🤖 Gemini AI | Visual understanding and analysis |
+| 📊 Frontend UI | Display generated insights |
+
+---
 
 ## 🛠️ Tech Stack
 
 ### Backend
 
-- Python
-- FastAPI
-- Uvicorn
-- OpenCV
-- Google Gemini API
-- Pillow
-- Python-dotenv
+- 🐍 Python
+- ⚡ FastAPI
+- 🚀 Uvicorn
+- 👁️ OpenCV
+- 🤖 Google Gemini API
+- 🖼️ Pillow
+- 🔑 Python-dotenv
 
 ### Frontend
 
-- HTML
-- CSS
-- JavaScript
+- 🌐 HTML5
+- 🎨 CSS3
+- ⚡ JavaScript
+
+### Development
+
+- 🐙 Git
+- 🐙 GitHub
+- 🐍 Python Virtual Environment
+
+---
 
 ## 📂 Project Structure
 
+```text
 snap-teller/
 │
 ├── frontend/
@@ -46,9 +153,9 @@ snap-teller/
 │
 ├── uploads/
 │
+├── main.py
 ├── ai_analyzer.py
 ├── video_processor.py
-├── main.py
 │
 ├── check_gemini.py
 ├── check_models.py
@@ -57,119 +164,296 @@ snap-teller/
 │
 ├── .gitignore
 └── README.md
+```
 
-## ⚙️ Installation
+### 📌 Core Files
 
-### 1. Clone the repository
-
-git clone https://github.com/itsdivyanshuno/snap-teller.git
-cd snap-teller
-
-### 2. Create a virtual environment
-
-python3 -m venv venv
-
-Activate it:
-
-source venv/bin/activate
-
-### 3. Install dependencies
-
-pip install fastapi uvicorn opencv-python google-genai python-multipart Pillow python-dotenv
-
-## 🔑 Gemini API Setup
-
-Create a `.env` file in the project root:
-
-GEMINI_API_KEY=your_api_key_here
-
-Add your Google Gemini API key.
-
-Never commit your `.env` file or expose your API key publicly.
-
-## ▶️ Run SnapTeller
-
-### Start the backend
-
-uvicorn main:app --reload
-
-Backend:
-
-http://127.0.0.1:8000
-
-### Start the frontend
-
-Open another terminal:
-
-cd frontend
-python3 -m http.server 5500
-
-Open:
-
-http://localhost:5500
-
-## 🔄 How It Works
-
-             🎥 Video
-                │
-                ▼
-          📤 Video Upload
-                │
-                ▼
-       🎞️ Frame Extraction
-                │
-                ▼
-        🖼️ Important Frames
-                │
-                ▼
-           🤖 Gemini AI
-                │
-                ▼
-        📝 Video Analysis
-                │
-                ▼
-         🎯 SnapTeller Result
-
-SnapTeller extracts selected frames from the uploaded video and sends them for AI analysis. Gemini then interprets the visual content and generates useful information about the video.
-
-## 🧪 Testing
-
-Test video processing:
-
-python test_video.py
-
-Test AI analysis:
-
-python test_ai.py
-
-Check Gemini configuration:
-
-python check_gemini.py
-
-## 🚀 Future Improvements
-
-- 🎤 Audio and speech analysis
-- ⏱️ Timestamp-based video insights
-- 📌 Automatic highlight detection
-- 📊 More detailed video analytics
-- 🧠 Better scene understanding
-- 🎞️ Support for longer videos
-- 📱 Improved responsive UI
-- 🔐 User authentication
-- ☁️ Cloud-based video processing
-
-## 👨‍💻 Author
-
-**Divyansh Shukla**
-
-GitHub: https://github.com/itsdivyanshuno
-
-LinkedIn: https://www.linkedin.com/in/itsdivyanshuno
-
-## ⭐ Support
-
-If you find SnapTeller interesting, consider giving the repository a ⭐ on GitHub.
+| File | Purpose |
+|---|---|
+| `main.py` | FastAPI application and API endpoints |
+| `video_processor.py` | Video processing and frame extraction |
+| `ai_analyzer.py` | Gemini AI integration and video analysis |
+| `frontend/index.html` | Main frontend interface |
+| `frontend/script.js` | Frontend logic and API communication |
+| `frontend/style.css` | Frontend styling |
+| `test_video.py` | Video processing tests |
+| `test_ai.py` | AI analysis tests |
+| `check_gemini.py` | Gemini configuration check |
+| `check_models.py` | Available model check |
 
 ---
 
-**SnapTeller — Watch less. Understand more. 🎥🤖**
+## ⚙️ Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/itsdivyanshuno/snap-teller.git
+cd snap-teller
+```
+
+### 2. Create a Virtual Environment
+
+```bash
+python3 -m venv venv
+```
+
+### 3. Activate the Virtual Environment
+
+#### Linux / macOS
+
+```bash
+source venv/bin/activate
+```
+
+#### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### 4. Install Dependencies
+
+```bash
+pip install fastapi uvicorn opencv-python google-genai python-multipart Pillow python-dotenv
+```
+
+---
+
+## 🔑 Gemini API Setup
+
+SnapTeller requires a **Google Gemini API key** for AI-powered video analysis.
+
+Create a `.env` file in the project root:
+
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+Add your Gemini API key.
+
+### ⚠️ Security
+
+Never commit your `.env` file to GitHub.
+
+Your `.gitignore` should contain:
+
+```text
+.env
+.env.*
+venv/
+__pycache__/
+*.pyc
+uploads/*
+*.mp4
+*.mov
+*.avi
+*.mkv
+```
+
+---
+
+## ▶️ Run SnapTeller
+
+### Start the Backend
+
+From the project root:
+
+```bash
+uvicorn main:app --reload
+```
+
+The FastAPI backend will run at:
+
+**http://127.0.0.1:8000**
+
+---
+
+### Start the Frontend
+
+Open another terminal:
+
+```bash
+cd frontend
+python3 -m http.server 5500
+```
+
+Then open:
+
+**http://localhost:5500**
+
+---
+
+## 🔄 Complete Request Flow
+
+```mermaid
+sequenceDiagram
+    participant U as 👤 User
+    participant F as 🌐 Frontend
+    participant B as ⚡ FastAPI
+    participant V as 🎞️ Video Processor
+    participant G as 🤖 Gemini AI
+
+    U->>F: Upload video
+    F->>B: Send video
+    B->>V: Process video
+    V->>V: Extract important frames
+    V->>G: Send frames
+    G->>V: AI analysis
+    V->>B: Return analysis
+    B->>F: Send result
+    F->>U: Display insights
+```
+
+---
+
+## 🎯 Usage
+
+Once both servers are running:
+
+```text
+1. Open http://localhost:5500
+          ↓
+2. Upload a video
+          ↓
+3. SnapTeller processes the video
+          ↓
+4. Important frames are extracted
+          ↓
+5. Frames are analyzed by Gemini
+          ↓
+6. AI-generated analysis is returned
+          ↓
+7. Result is displayed on the frontend
+```
+
+---
+
+## 🧪 Testing
+
+### Test Video Processing
+
+```bash
+python test_video.py
+```
+
+### Test AI Analysis
+
+```bash
+python test_ai.py
+```
+
+### Check Gemini Configuration
+
+```bash
+python check_gemini.py
+```
+
+### Check Available Gemini Models
+
+```bash
+python check_models.py
+```
+
+---
+
+## ⚡ Performance Approach
+
+SnapTeller uses a lightweight processing pipeline:
+
+```text
+🎥 Video
+   ↓
+🎞️ Frame Processing
+   ↓
+🖼️ Selected Frames
+   ↓
+🤖 Gemini AI
+   ↓
+📝 Analysis
+```
+
+Instead of attempting to process every frame of a video, SnapTeller extracts selected frames and uses them for AI analysis.
+
+This helps reduce unnecessary processing while keeping the analysis focused on important visual information.
+
+---
+
+## 💡 Why SnapTeller?
+
+Long videos can contain a lot of information, but users don't always have time to watch everything.
+
+SnapTeller aims to make video understanding faster by combining:
+
+**Computer Vision + Generative AI + Simple UX**
+
+> **Don't just watch the video. Understand it.**
+
+---
+
+## 🔮 Future Improvements
+
+- 🎤 Audio and speech analysis
+- 🗣️ Automatic speech transcription
+- ⏱️ Timestamp-based insights
+- 📌 Automatic highlight detection
+- 📊 Advanced video analytics
+- 🧠 Improved scene understanding
+- 🎞️ Better support for long videos
+- 📱 Fully responsive interface
+- 🔐 User authentication
+- ☁️ Cloud-based video processing
+- 💾 Video analysis history
+- 📈 Analytics dashboard
+- 🎯 Automatic key-moment detection
+
+---
+
+## 🚧 Project Status
+
+**SnapTeller is currently under active development.**
+
+The current version focuses on:
+
+- Video upload
+- Frame extraction
+- Gemini-powered visual analysis
+- AI-generated video understanding
+- Local frontend/backend execution
+
+More advanced video intelligence features can be added in future versions.
+
+---
+
+## 👨‍💻 Author
+
+### Divyansh Shukla
+
+**B.Tech Information Technology — HBTU Kanpur**
+
+🔗 **GitHub**  
+https://github.com/itsdivyanshuno
+
+🔗 **LinkedIn**  
+https://www.linkedin.com/in/itsdivyanshuno
+
+---
+
+## ⭐ Support
+
+If you find **SnapTeller** interesting or useful, consider giving the repository a ⭐ on GitHub.
+
+It helps support the project and encourages further development.
+
+---
+
+<div align="center">
+
+# 🎥 SnapTeller
+
+### Watch less. Understand more.
+
+**Built with Python · OpenCV · FastAPI · Gemini AI**
+
+</div>
+```
